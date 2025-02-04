@@ -5,3 +5,8 @@ export type Character = {
   name: string;
   image: string;
 };
+
+export type TierData = {
+  name: string;
+  characters: Character[];
+}

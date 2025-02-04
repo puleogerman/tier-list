@@ -1,12 +1,8 @@
 "use client";
 import { useState } from "react";
-import {
-  DndContext,
-  closestCorners,
-  DragEndEvent,
-} from "@dnd-kit/core";
+import { DndContext, closestCorners, DragEndEvent } from "@dnd-kit/core";
 import ShareButton from "./ShareButton";
-import { Character, Tier } from "../types";
+import { Character, Tier, TierData } from "../types";
 import { defaultTiers, initialCharacters } from "../utils/constants";
 import { DropZone } from "./DropZone";
 import { DraggableCharacter } from "./DraggableCharacter";
@@ -16,112 +12,125 @@ const maxTiers = 8;
 const minTiers = 3;
 
 export default function TierList() {
-  const [tiers, setTiers] = useState<Record<string, Character[]>>(
-    Object.fromEntries(defaultTiers.map((tier) => [tier, []]))
+  const [tiers, setTiers] = useState<TierData[]>(
+    defaultTiers.map((name) => ({ name, characters: [] }))
   );
-  const [characters, setCharacters] = useState(initialCharacters);
+  const [characters, setCharacters] = useState<Character[]>(initialCharacters);
+  const [editingTier, setEditingTier] = useState<string | null>(null);
+
+  const findCharacter = (id: string): Character | undefined => {
+    return (
+      characters.find((char) => char.id === id) ||
+      tiers.flatMap((tier) => tier.characters).find((char) => char.id === id)
+    );
+  };
 
   const onDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
     const characterId = active.id as string;
-
     if (!characterId) return;
 
     const movedCharacter = findCharacter(characterId);
     if (!movedCharacter) return;
 
     if (!over) {
-      setCharacters((prev) => {
-        if (!prev.some((character) => character.id === characterId)) {
-          return [...prev, movedCharacter];
-        }
-        return prev;
-      });
+      setCharacters((prev) =>
+        prev.some((char) => char.id === characterId)
+          ? prev
+          : [...prev, movedCharacter]
+      );
       return;
     }
 
     const destination = over.id as string;
-
     setTiers((prevTiers) => {
-      let updatedTiers = { ...prevTiers };
-
-      Object.keys(updatedTiers).forEach((tier) => {
-        updatedTiers[tier] = updatedTiers[tier].filter(
-          (char) => char.id !== characterId
-        );
-      });
-
-      if (destination === "pool") {
-        setCharacters((prev) => {
-          if (!prev.some((char) => char.id === characterId)) {
-            return [...prev, movedCharacter];
-          }
-          return prev;
-        });
-      } else if (destination in updatedTiers) {
-        updatedTiers[destination] = [...updatedTiers[destination], movedCharacter];
-        setCharacters((prev) => prev.filter((char) => char.id !== characterId));
-      }
-
-      return updatedTiers;
+      return prevTiers.map((tier) => ({
+        ...tier,
+        characters: tier.characters.filter((char) => char.id !== characterId),
+      }));
     });
-  };
 
-  const findCharacter = (id: string): Character | undefined => {
-    return (
-      characters.find((char) => char.id === id) ||
-      Object.values(tiers).flat().find((char) => char.id === id)
-    );
+    if (destination === "pool") {
+      setCharacters((prev) =>
+        prev.some((char) => char.id === characterId)
+          ? prev
+          : [...prev, movedCharacter]
+      );
+    } else {
+      setTiers((prevTiers) =>
+        prevTiers.map((tier) =>
+          tier.name === destination
+            ? { ...tier, characters: [...tier.characters, movedCharacter] }
+            : tier
+        )
+      );
+      setCharacters((prev) => prev.filter((char) => char.id !== characterId));
+    }
   };
 
   const addTier = () => {
-    if (Object.keys(tiers).length >= maxTiers) return;
-    const nextTier = String.fromCharCode(69 + Object.keys(tiers).length - 5); // 'E', 'F', 'G'
-    setTiers((prev) => ({ ...prev, [nextTier]: [] }));
+    if (tiers.length >= maxTiers) return;
+
+    const nextTierName = String.fromCharCode(69 + tiers.length - 5); // 'E', 'F', 'G'
+    setTiers((prev) => [...prev, { name: nextTierName, characters: [] }]);
   };
 
-  const removeTier = (tier: Tier) => {
-    const existingTiers = Object.keys(tiers) as Tier[];
-    if (existingTiers.length <= 3) return; // Prevent deleting too many tiers
-  
-    setTiers((prev) => {
-      if (!prev[tier]) return prev; // Prevent double execution
-  
-      const updatedTiers = { ...prev };
-      const removedCharacters = updatedTiers[tier]; // Get characters from deleted tier
-      delete updatedTiers[tier]; // Remove the tier
-  
-      setCharacters((prevCharacters) => {
-        // Avoid duplicates by filtering out characters that already exist
-        const uniqueCharacters = removedCharacters.filter(
+  const updateTierName = (oldName: string, newName: string) => {
+    if (!newName.trim() || tiers.some((tier) => tier.name === newName)) return;
+    setTiers((prevTiers) =>
+      prevTiers.map((tier) =>
+        tier.name === oldName ? { ...tier, name: newName } : tier
+      )
+    );
+    setEditingTier(null);
+  };
+
+  const removeTier = (tierName: string) => {
+    if (tiers.length <= minTiers) return;
+
+    setTiers((prevTiers) => {
+      const removedTier = prevTiers.find((tier) => tier.name === tierName);
+      if (!removedTier) return prevTiers;
+
+      setCharacters((prevCharacters) => [
+        ...prevCharacters,
+        ...removedTier.characters.filter(
           (char) => !prevCharacters.some((c) => c.id === char.id)
-        );
-        return [...prevCharacters, ...uniqueCharacters];
-      });
-  
-      return updatedTiers;
+        ),
+      ]);
+
+      return prevTiers.filter((tier) => tier.name !== tierName);
     });
   };
 
   return (
     <div className="p-4">
-      <h2 className="text-2xl font-bold text-center mb-4">Create Your Tier List</h2>
-
       <DndContext collisionDetection={closestCorners} onDragEnd={onDragEnd}>
         <div className="mb-6 p-4 border rounded-lg">
-          <h3 className="text-lg font-semibold mb-2 text-center">Character Pool</h3>
+          <h3 className="text-lg font-semibold mb-2 text-center">
+            Character Pool
+          </h3>
           <div className="flex flex-wrap justify-center gap-2">
             <DropZone id="pool">
               {characters.map((char) => (
-                <DraggableCharacter key={char.id} id={char.id} image={char.image} />
+                <DraggableCharacter
+                  key={char.id}
+                  id={char.id}
+                  image={char.image}
+                />
               ))}
             </DropZone>
           </div>
         </div>
 
         <div className="flex flex-col gap-2">
-          {Object.entries(tiers).map(([tier, characters]) => (
-            <TierRow key={tier} tier={tier as Tier} characters={characters} onRemove={removeTier} />
+          {tiers.map((tier) => (
+            <TierRow
+              key={tier.name}
+              tier={tier}
+              onRemove={removeTier}
+              onRename={updateTierName}
+            />
           ))}
         </div>
       </DndContext>
@@ -142,5 +151,3 @@ export default function TierList() {
     </div>
   );
 }
-
-

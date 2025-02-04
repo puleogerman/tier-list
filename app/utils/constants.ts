@@ -6,6 +6,7 @@ export const initialCharacters: Character[] = [
   { id: "3", name: "Sonic", image: "/images/sonic.png" },
   { id: "4", name: "Cloud", image: "/images/cloud_chocobo.jpg" },
   { id: "5", name: "Lara", image: "/images/lara_croft.png" },
+  { id: "6", name: "Link", image: "/images/link_bow.png" },
 ];
 
 export const defaultTiers = ["S", "A", "B", "C", "D"];

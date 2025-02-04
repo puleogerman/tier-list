@@ -22,6 +22,8 @@ const initialCharacters: Character[] = [
   { id: "1", name: "Mario", image: "/images/mario.png" },
   { id: "2", name: "Pikachu", image: "/images/pikachu.png" },
   { id: "3", name: "Sonic", image: "/images/sonic.png" },
+  { id: "4", name: "Cloud", image: "/images/cloud_chocobo.jpg" },
+  { id: "5", name: "Lara", image: "/images/lara_croft.png" },
 ];
 
 const initialTiers: Record<Tier, Character[]> = {
@@ -50,7 +52,7 @@ export default function TierList() {
     if (!over) {
       // If dropped outside any valid drop zone, return it to the pool
       setCharacters((prev) => {
-        if (!prev.some((char) => char.id === characterId)) {
+        if (!prev.some((character) => character.id === characterId)) {
           return [...prev, movedCharacter];
         }
         return prev;
@@ -158,7 +160,7 @@ function DraggableCharacter({ id, image }: { id: string; image: string }) {
       {...attributes}
       src={image}
       width={100}
-      height={60}
+      height={100}
       style={{
         transform: transform
           ? `translate(${transform.x}px, ${transform.y}px)`

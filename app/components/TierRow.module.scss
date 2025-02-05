@@ -1,0 +1,38 @@
+.tierRow {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 8px;
+  }
+  
+  .tierName {
+    width: 20%;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.25rem;
+    padding: 8px;
+    cursor: pointer;
+  }
+  
+  .charactersContainer {
+    width: 60%;
+    padding: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  
+  .removeButton {
+    color: red;
+    width: 16%;
+    text-align: center;
+    font-size: 1.25rem;
+    cursor: pointer;
+  }
+
+  .removeButton:hover { 
+    color: rgb(133, 0, 0);
+
+  }

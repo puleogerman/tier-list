@@ -2,6 +2,7 @@ import { useState } from "react";
 import { TierData } from "../types";
 import { DropZone } from "./DropZone";
 import { DraggableCharacter } from "./DraggableCharacter";
+import styles from "./TierRow.module.scss";
 
 interface TierRowProps {
   tier: TierData;
@@ -51,13 +52,13 @@ export default function TierRow({ tier, onRemove, onRename }: TierRowProps) {
       </div>
 
       {/* Delete Tier Button */}
-      <div className="w-1/6 text-center py-4">
+      <div className={styles.removeButton}>
+     
         <button
           onClick={() => onRemove(tier.name)}
-          className="text-red-500 hover:text-red-700 text-lg"
           aria-label="Remove Tier"
         >
-          ❌
+           ❌ 
         </button>
       </div>
     </div>

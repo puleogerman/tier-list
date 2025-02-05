@@ -123,7 +123,7 @@ export default function TierList() {
           </div>
         </div>
 
-        <div className="flex flex-col gap-2">
+        <div id="tier-list-container" className="flex flex-col gap-2">
           {tiers.map((tier) => (
             <TierRow
               key={tier.name}

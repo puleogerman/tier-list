@@ -1,11 +1,19 @@
+$tier-colors: #CDEDDD, #C0E9ED, #FCE6D3, #FAD9D5,#FBB7C7, #bde0fe, #E5DB9C, #beb4c5;
+
 .tierRow {
-    display: flex;
-    width: 100%;
-    align-items: center;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 8px;
+  @for $i from 1 through 8 {
+    &.tier-#{$i} {
+      background-color: nth($tier-colors, $i);
+    }
   }
+
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  padding: 8px;
+  margin-bottom: 8px;
+}
   
   .tierName {
     width: 20%;

@@ -6,11 +6,12 @@ import styles from "./TierRow.module.scss";
 
 interface TierRowProps {
   tier: TierData;
+  index: number;
   onRemove: (tierName: string) => void;
   onRename: (oldName: string, newName: string) => void;
 }
 
-export default function TierRow({ tier, onRemove, onRename }: TierRowProps) {
+export default function TierRow({ tier, index, onRemove, onRename }: TierRowProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [newName, setNewName] = useState(tier.name);
 
@@ -22,7 +23,7 @@ export default function TierRow({ tier, onRemove, onRename }: TierRowProps) {
   };
 
   return (
-    <div className="flex w-full items-center border rounded-lg">
+    <div className={`${styles.tierRow} ${styles[`tier-${index + 1}`]}`}>
       {/* Tier Name (Editable) */}
       <div className="w-1/6 text-center font-bold text-xl py-4 cursor-pointer">
         {isEditing ? (

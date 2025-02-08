@@ -8,7 +8,7 @@ import { DropZone } from "./DropZone";
 import { DraggableCharacter } from "./DraggableCharacter";
 import TierRow from "./TierRow";
 
-const maxTiers = 8;
+const maxTiers = 7;
 const minTiers = 3;
 
 export default function TierList() {
@@ -104,30 +104,47 @@ export default function TierList() {
   };
 
   return (
-    <div className="p-4">
+    <div className="px-4">
       <DndContext collisionDetection={closestCorners} onDragEnd={onDragEnd}>
-        <div className="mb-6 p-4 border rounded-lg">
-          <h3 className="text-lg font-semibold mb-2 text-center">
-            Character Pool
-          </h3>
-          <div className="flex flex-wrap justify-center gap-2">
-            <DropZone id="pool">
-              {characters.map((char) => (
-                <DraggableCharacter
-                  key={char.id}
-                  id={char.id}
-                  image={char.image}
-                />
-              ))}
-            </DropZone>
-          </div>
-        </div>
+      <div className="mb-6 p-4 border rounded-lg flex">
+  {/* Character Pool */}
+  <div className="w-1/2 pr-4">
+    <h3 className="text-lg font-semibold mb-2 text-center">Character Pool</h3>
+    <div className="flex flex-wrap justify-center gap-2">
+      <DropZone id="pool">
+        {characters.map((char) => (
+          <DraggableCharacter key={char.id} id={char.id} image={char.image} />
+        ))}
+      </DropZone>
+    </div>
+  </div>
 
-        <div id="tier-list-container" className="flex flex-col gap-2">
-          {tiers.map((tier) => (
+  {/* Search Character Images */}
+  <div className="w-1/2 pl-4 border-l">
+    <h3 className="text-lg font-semibold mb-2 text-center">Search Characters</h3>
+    <div className="flex items-center gap-2">
+      <input
+        type="text"
+        placeholder="Search for a character..."
+        className="border p-2 w-full rounded"
+      />
+      <button className="bg-blue-500 text-white px-4 py-2 rounded">🔍</button>
+    </div>
+    <div className="mt-4 grid grid-cols-3 gap-2">
+      {/* Placeholder images */}
+      {/* <img src="/placeholder.png" className="w-full h-auto border rounded" />
+      <img src="/placeholder.png" className="w-full h-auto border rounded" />
+      <img src="/placeholder.png" className="w-full h-auto border rounded" /> */}
+    </div>
+  </div>
+</div>
+
+        <div className="flex flex-col gap-2">
+          {tiers.map((tier, index) => (
             <TierRow
               key={tier.name}
               tier={tier}
+              index={index}
               onRemove={removeTier}
               onRename={updateTierName}
             />
@@ -137,7 +154,7 @@ export default function TierList() {
 
       <div className="mt-4 flex justify-between">
         <button
-          className="bg-blue-500 text-white px-4 py-2 rounded disabled:opacity-50"
+          className="button-distorted"
           onClick={addTier}
           disabled={Object.keys(tiers).length >= maxTiers}
         >

@@ -7,6 +7,7 @@ import { defaultTiers, initialCharacters } from "../utils/constants";
 import { DropZone } from "./DropZone";
 import { DraggableCharacter } from "./DraggableCharacter";
 import TierRow from "./TierRow";
+import CharacterPool from "./CharacterPool";
 
 const maxTiers = 7;
 const minTiers = 3;
@@ -17,6 +18,8 @@ export default function TierList() {
   );
   const [characters, setCharacters] = useState<Character[]>(initialCharacters);
   const [editingTier, setEditingTier] = useState<string | null>(null);
+
+  const [tierListTitle, setTierListTitle] = useState("My TierList");
 
   const findCharacter = (id: string): Character | undefined => {
     return (
@@ -108,16 +111,7 @@ export default function TierList() {
       <DndContext collisionDetection={closestCorners} onDragEnd={onDragEnd}>
       <div className="mb-6 p-4 border rounded-lg flex">
   {/* Character Pool */}
-  <div className="w-1/2 pr-4">
-    <h3 className="text-lg font-semibold mb-2 text-center">Character Pool</h3>
-    <div className="flex flex-wrap justify-center gap-2">
-      <DropZone id="pool">
-        {characters.map((char) => (
-          <DraggableCharacter key={char.id} id={char.id} image={char.image} />
-        ))}
-      </DropZone>
-    </div>
-  </div>
+  <CharacterPool characters={characters} setCharacters={setCharacters}/>
 
   {/* Search Character Images */}
   <div className="w-1/2 pl-4 border-l">
@@ -139,6 +133,18 @@ export default function TierList() {
   </div>
 </div>
 
+<div id="tier-list-container" className="m-2 box-border">
+
+        {/* Tier List Title */}
+        <div className="mb-4 text-center">
+          <input
+            type="text"
+            value={tierListTitle}
+            onChange={(e) => setTierListTitle(e.target.value)}
+            className="text-2xl font-bold text-center border-b-2 border-gray-300 focus:outline-none focus:border-blue-500 transition"
+          />
+        </div>
+
         <div className="flex flex-col gap-2">
           {tiers.map((tier, index) => (
             <TierRow
@@ -150,6 +156,8 @@ export default function TierList() {
             />
           ))}
         </div>
+</div>
+
       </DndContext>
 
       <div className="mt-4 flex justify-between">

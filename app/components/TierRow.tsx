@@ -44,7 +44,7 @@ export default function TierRow({ tier, index, onRemove, onRename }: TierRowProp
       {/* Character DropZone */}
       <div className="w-4/6 p-4">
         <DropZone id={tier.name}>
-          <div className="flex gap-2 flex-wrap">
+          <div className="flex-1 flex gap-2 flex-wrap">
             {tier.characters.map((char) => (
               <DraggableCharacter key={char.id} id={char.id} image={char.image} />
             ))}

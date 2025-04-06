@@ -16,7 +16,7 @@ $tier-colors: #CDEDDD, #C0E9ED, #FCE6D3, #FAD9D5,#FBB7C7, #bde0fe, #E5DB9C, #beb
 }
   
   .tierName {
-    width: 20%;
+    width: 15%;
     text-align: center;
     font-weight: bold;
     font-size: 1.25rem;
@@ -25,16 +25,13 @@ $tier-colors: #CDEDDD, #C0E9ED, #FCE6D3, #FAD9D5,#FBB7C7, #bde0fe, #E5DB9C, #beb
   }
   
   .charactersContainer {
-    width: 60%;
-    padding: 8px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
+    width: 80%;
+    padding: 4px;
   }
   
   .removeButton {
     color: red;
-    width: 16%;
+    width: 5%;
     text-align: center;
     font-size: 1.25rem;
     cursor: pointer;

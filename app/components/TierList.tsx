@@ -8,6 +8,7 @@ import { DropZone } from "./DropZone";
 import { DraggableCharacter } from "./DraggableCharacter";
 import TierRow from "./TierRow";
 import CharacterPool from "./CharacterPool";
+import CharacterSearch from "./CharacterSearch";
 
 const maxTiers = 7;
 const minTiers = 3;
@@ -109,55 +110,40 @@ export default function TierList() {
   return (
     <div className="px-4">
       <DndContext collisionDetection={closestCorners} onDragEnd={onDragEnd}>
-      <div className="mb-6 p-4 border rounded-lg flex">
-  {/* Character Pool */}
-  <CharacterPool characters={characters} setCharacters={setCharacters}/>
-
-  {/* Search Character Images */}
-  <div className="w-1/2 pl-4 border-l">
-    <h3 className="text-lg font-semibold mb-2 text-center">Search Characters</h3>
-    <div className="flex items-center gap-2">
-      <input
-        type="text"
-        placeholder="Search for a character..."
-        className="border p-2 w-full rounded"
-      />
-      <button className="bg-blue-500 text-white px-4 py-2 rounded">🔍</button>
-    </div>
-    <div className="mt-4 grid grid-cols-3 gap-2">
-      {/* Placeholder images */}
-      {/* <img src="/placeholder.png" className="w-full h-auto border rounded" />
-      <img src="/placeholder.png" className="w-full h-auto border rounded" />
-      <img src="/placeholder.png" className="w-full h-auto border rounded" /> */}
-    </div>
-  </div>
-</div>
-
-<div id="tier-list-container" className="m-2 box-border">
-
-        {/* Tier List Title */}
-        <div className="mb-4 text-center">
-          <input
-            type="text"
-            value={tierListTitle}
-            onChange={(e) => setTierListTitle(e.target.value)}
-            className="text-2xl font-bold text-center border-b-2 border-gray-300 focus:outline-none focus:border-blue-500 transition"
+        <div className="mb-6 p-4 border rounded-lg flex">
+          {/* Character Pool */}
+          <CharacterPool
+            characters={characters}
+            setCharacters={setCharacters}
           />
+
+          {/* Search Character Images
+          <CharacterSearch /> */}
         </div>
 
-        <div className="flex flex-col gap-2">
-          {tiers.map((tier, index) => (
-            <TierRow
-              key={tier.name}
-              tier={tier}
-              index={index}
-              onRemove={removeTier}
-              onRename={updateTierName}
+        <div id="tier-list-container" className="m-2 box-border">
+          {/* Tier List Title */}
+          <div className="mb-4 text-center">
+            <input
+              type="text"
+              value={tierListTitle}
+              onChange={(e) => setTierListTitle(e.target.value)}
+              className="text-2xl font-bold text-center border-b-2 border-gray-300 focus:outline-none focus:border-blue-500 transition"
             />
-          ))}
-        </div>
-</div>
+          </div>
 
+          <div className="flex flex-col gap-2">
+            {tiers.map((tier, index) => (
+              <TierRow
+                key={tier.name}
+                tier={tier}
+                index={index}
+                onRemove={removeTier}
+                onRename={updateTierName}
+              />
+            ))}
+          </div>
+        </div>
       </DndContext>
 
       <div className="mt-4 flex justify-between">

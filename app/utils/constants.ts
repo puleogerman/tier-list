@@ -10,14 +10,3 @@ export const initialCharacters: Character[] = [
 ];
 
 export const defaultTiers = ["S", "A", "B", "C", "D"];
-
-// export const initialTiers: Record<Tier, Character[]> = {
-//     S: [],
-//     A: [],
-//     B: [],
-//     C: [],
-//     D: [],
-//     E: [],
-//     F: [],
-//     G: []
-// };

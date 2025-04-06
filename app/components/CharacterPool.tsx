@@ -46,7 +46,7 @@ export default function CharacterPool({
 
   return (
     <div
-      className={`w-1/2 pr-4 border p-4 rounded-lg ${
+      className={`w-full pr-4 border p-4 rounded-lg ${
         dragging ? "border-blue-500 bg-blue-100" : "border-gray-300"
       }`}
       onDragOver={(e) => {

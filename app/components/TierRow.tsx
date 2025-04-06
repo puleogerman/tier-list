@@ -11,7 +11,12 @@ interface TierRowProps {
   onRename: (oldName: string, newName: string) => void;
 }
 
-export default function TierRow({ tier, index, onRemove, onRename }: TierRowProps) {
+export default function TierRow({
+  tier,
+  index,
+  onRemove,
+  onRename,
+}: TierRowProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [newName, setNewName] = useState(tier.name);
 
@@ -42,11 +47,15 @@ export default function TierRow({ tier, index, onRemove, onRename }: TierRowProp
       </div>
 
       {/* Character DropZone */}
-      <div className="w-4/6 p-4">
+      <div className={styles.charactersContainer}>
         <DropZone id={tier.name}>
           <div className="flex-1 flex gap-2 flex-wrap">
             {tier.characters.map((char) => (
-              <DraggableCharacter key={char.id} id={char.id} image={char.image} />
+              <DraggableCharacter
+                key={char.id}
+                id={char.id}
+                image={char.image}
+              />
             ))}
           </div>
         </DropZone>
@@ -54,12 +63,8 @@ export default function TierRow({ tier, index, onRemove, onRename }: TierRowProp
 
       {/* Delete Tier Button */}
       <div className={styles.removeButton}>
-     
-        <button
-          onClick={() => onRemove(tier.name)}
-          aria-label="Remove Tier"
-        >
-           ❌ 
+        <button onClick={() => onRemove(tier.name)} aria-label="Remove Tier">
+          <span className="material-symbols-outlined">close</span>
         </button>
       </div>
     </div>

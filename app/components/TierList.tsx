@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { DndContext, closestCorners, DragEndEvent } from "@dnd-kit/core";
+import { DndContext, closestCorners, rectIntersection,DragEndEvent } from "@dnd-kit/core";
 import ShareButton from "./ShareButton";
 import { Character, Tier, TierData } from "../types";
 import { defaultTiers, initialCharacters } from "../utils/constants";
@@ -109,7 +109,7 @@ export default function TierList() {
 
   return (
     <div className="px-4">
-      <DndContext collisionDetection={closestCorners} onDragEnd={onDragEnd}>
+      <DndContext collisionDetection={rectIntersection} onDragEnd={onDragEnd}>
         <div className="mb-6 p-4 border rounded-lg flex">
           {/* Character Pool */}
           <CharacterPool

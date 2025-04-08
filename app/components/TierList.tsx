@@ -1,14 +1,11 @@
 "use client";
 import { useState } from "react";
-import { DndContext, closestCorners, rectIntersection,DragEndEvent } from "@dnd-kit/core";
+import { DndContext, rectIntersection,DragEndEvent } from "@dnd-kit/core";
 import ShareButton from "./ShareButton";
 import { Character, Tier, TierData } from "../types";
 import { defaultTiers, initialCharacters } from "../utils/constants";
-import { DropZone } from "./DropZone";
-import { DraggableCharacter } from "./DraggableCharacter";
 import TierRow from "./TierRow";
 import CharacterPool from "./CharacterPool";
-import CharacterSearch from "./CharacterSearch";
 
 const maxTiers = 7;
 const minTiers = 3;
@@ -146,7 +143,7 @@ export default function TierList() {
         </div>
       </DndContext>
 
-      <div className="mt-4 flex justify-between">
+      {/* <div className="mt-4 flex justify-between">
         <button
           className="button-distorted"
           onClick={addTier}
@@ -154,7 +151,7 @@ export default function TierList() {
         >
           Add Tier
         </button>
-      </div>
+      </div> */}
 
       <div className="mt-6 flex justify-center">
         <ShareButton tierListId="example-tierlist-id" />

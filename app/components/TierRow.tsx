@@ -62,11 +62,11 @@ export default function TierRow({
       </div>
 
       {/* Delete Tier Button */}
-      <div className={styles.removeButton}>
+      {/* <div className={styles.removeButton}>
         <button onClick={() => onRemove(tier.name)} aria-label="Remove Tier">
           <span className="material-symbols-outlined">close</span>
         </button>
-      </div>
+      </div> */}
     </div>
   );
 }

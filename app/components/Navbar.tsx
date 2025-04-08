@@ -3,8 +3,13 @@ import { useState } from "react";
 import styles from "./Navbar.module.scss";
 import Dialog from "./Dialog";
 
-export default function Navbar() {
+interface NavbarProps {
+  onReset: () => void;
+}
+
+export default function Navbar({ onReset }: NavbarProps) {
   const [isInstructionsOpen, setIsInstructionsOpen] = useState(false);
+  const [isConfirmResetOpen, setIsConfirmResetOpen] = useState(false);
 
   return (
     <>
@@ -18,7 +23,12 @@ export default function Navbar() {
           >
             Instructions
           </button>
-          <button className={styles.navButton}>Examples</button>
+          <button 
+            className={`${styles.navButton} ${styles.resetButton}`}
+            onClick={() => setIsConfirmResetOpen(true)}
+          >
+            Reset
+          </button>
         </div>
       </nav>
 
@@ -40,6 +50,34 @@ export default function Navbar() {
           <p className="text-sm text-gray-500">
             Note: Only PNG, JPEG, and WebP images are supported.
           </p>
+        </div>
+      </Dialog>
+            {/* Reset Confirmation Dialog */}
+            <Dialog 
+        isOpen={isConfirmResetOpen} 
+        onClose={() => setIsConfirmResetOpen(false)}
+        title="Confirm Reset"
+      >
+        <div className="space-y-4">
+          <p>Are you sure you want to reset your tier list?</p>
+          <p className="text-sm text-gray-500">This will clear all your current tiers and characters.</p>
+          <div className="flex justify-end gap-4 mt-4">
+            <button
+              className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300"
+              onClick={() => setIsConfirmResetOpen(false)}
+            >
+              Cancel
+            </button>
+            <button
+              className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+              onClick={() => {
+                onReset();
+                setIsConfirmResetOpen(false);
+              }}
+            >
+              Reset
+            </button>
+          </div>
         </div>
       </Dialog>
     </>

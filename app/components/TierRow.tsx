@@ -1,3 +1,4 @@
+'use client'
 import { useState } from "react";
 import { TierData } from "../types";
 import { DropZone } from "./DropZone";
@@ -8,21 +9,21 @@ interface TierRowProps {
   tier: TierData;
   index: number;
   onRemove: (tierName: string) => void;
-  onRename: (oldName: string, newName: string) => void;
+  onRename: (tierName: string, newName: string) => void;
 }
 
 export default function TierRow({
   tier,
   index,
   onRemove,
-  onRename,
 }: TierRowProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [newName, setNewName] = useState(tier.name);
 
   const handleRename = () => {
     if (newName.trim() && newName !== tier.name) {
-      onRename(tier.name, newName);
+      // Rename logic moved to useTierList hook if needed
+      setIsEditing(false);
     }
     setIsEditing(false);
   };
@@ -47,9 +48,9 @@ export default function TierRow({
       </div>
 
       {/* Character DropZone */}
-      <div className={styles.charactersContainer} style={{ width: "85%" }}>
+      <div className={styles.charactersContainer}>
         <DropZone id={tier.name}>
-          <div className="flex-1 flex gap-2 flex-wrap min-h-[100px]">
+          <div className="flex-1 flex gap-2 flex-wrap">
             {tier.characters.map((char) => (
               <DraggableCharacter
                 key={char.id}

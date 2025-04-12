@@ -194,7 +194,7 @@ export default function CharacterPool({
       {/* Character Pool Display */}
       <div className="flex flex-wrap justify-center gap-2">
         <DropZone id="pool">
-          {characters.map((char) => (
+          {characters?.length > 0 && characters?.map((char) => (
             <DraggableCharacter key={char.id} id={char.id} image={char.image} />
           ))}
         </DropZone>

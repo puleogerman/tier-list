@@ -51,7 +51,7 @@ export default function TierRow({
       <div className={styles.charactersContainer}>
         <DropZone id={tier.name}>
           <div className="flex-1 flex gap-2 flex-wrap">
-            {tier.characters.map((char) => (
+            {tier.characters?.length > 0 && tier.characters?.map((char) => (
               <DraggableCharacter
                 key={char.id}
                 id={char.id}

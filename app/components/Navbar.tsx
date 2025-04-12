@@ -63,12 +63,6 @@ export default function Navbar({ onReset }: NavbarProps) {
           <p className="text-sm text-gray-500">This will clear all your current tiers and characters.</p>
           <div className="flex justify-end gap-4 mt-4">
             <button
-              className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300"
-              onClick={() => setIsConfirmResetOpen(false)}
-            >
-              Cancel
-            </button>
-            <button
               className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
               onClick={() => {
                 onReset();

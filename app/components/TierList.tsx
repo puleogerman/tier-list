@@ -1,4 +1,3 @@
-// components/TierList.tsx
 "use client";
 import { DndContext, closestCorners } from "@dnd-kit/core";
 import TierRow from "./TierRow";

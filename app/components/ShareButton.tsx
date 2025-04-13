@@ -36,8 +36,8 @@ const captureTierList = async () => {
       onClick={captureTierList}
       className="button-distorted"
     >
-      {copied ? "Link Copied! ✅" : "Share Tier List"}
-      <span className="material-symbols-outlined">share</span>
+      {copied ? "Image saved ✅" : "Share"}
+      {/* <span className="material-symbols-outlined">share</span> */}
     </button>
   );
 };

@@ -1,5 +1,5 @@
 "use client";
-import { DndContext, closestCorners } from "@dnd-kit/core";
+import { DndContext, rectIntersection,  } from "@dnd-kit/core";
 import TierRow from "./TierRow";
 import CharacterPool from "./CharacterPool";
 import useTierList from "../hook/useTierList";
@@ -22,7 +22,7 @@ export default function TierList() {
 
   return (
     <div className="px-4">
-      <DndContext collisionDetection={closestCorners} onDragEnd={onDragEnd}>
+      <DndContext collisionDetection={rectIntersection} onDragEnd={onDragEnd}>
 
         <div className="character-pool-container box-border px-8 py-2">
           <CharacterPool

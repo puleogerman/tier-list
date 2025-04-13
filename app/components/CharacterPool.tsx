@@ -181,8 +181,6 @@ export default function CharacterPool({
           </div>
         </div>
         
-        <p className="text-sm text-gray-500">Drag & drop a folder or click to upload</p>
-        
         {/* Error Message */}
         {uploadError && (
           <div className="text-red-500 text-sm mt-2 p-2 bg-red-50 rounded">

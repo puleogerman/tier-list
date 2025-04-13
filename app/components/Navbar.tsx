@@ -44,7 +44,6 @@ export default function Navbar({ onReset }: NavbarProps) {
             <li>Add images to the Character Pool by clicking "Upload Folder" or dragging images</li>
             <li>Drag characters from the pool to the tier rows to organize them</li>
             <li>You can rename tiers by clicking on their names</li>
-            <li>Add or remove tiers using the buttons at the bottom</li>
             <li>Share your tier list when you're done!</li>
           </ol>
           <p className="text-sm text-gray-500">

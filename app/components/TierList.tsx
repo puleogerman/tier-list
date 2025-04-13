@@ -32,7 +32,7 @@ export default function TierList() {
 
         </div>
 
-        <div id="tier-list-container" className="m-2 box-border p-8">
+        <div id="tier-list-container" className="m-2 box-border px-8 py-2">
           {/* Tier List Title */}
           <div className="mb-4 text-center">
             <input

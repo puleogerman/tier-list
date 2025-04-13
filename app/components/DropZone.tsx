@@ -7,7 +7,7 @@ export function DropZone({ id, children }: { id: string; children: React.ReactNo
   return (
     <div 
       ref={setNodeRef} 
-      className={`p-4 rounded min-h-[100px] flex flex-wrap gap-2 ${
+      className={`p-2 rounded min-h-[100px] flex flex-wrap gap-2 ${
         isOver ? "bg-blue-100" : "bg-gray-100"
       }`}
       style={{ width: "100%", zIndex: 1 }}

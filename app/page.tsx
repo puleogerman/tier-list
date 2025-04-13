@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <div>
       <Navbar onReset={resetTierList} />
-      <div className="p-8">
+      <div className="px-8 py-2">
         <TierList />
       </div>
     </div>
